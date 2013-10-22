@@ -15,33 +15,72 @@
 
 #import <Foundation/Foundation.h>
 
-// This class provides a way to make easy asynchronous requests to Google for
-// conversion pings. Use the code as follows:
-//   [GoogleConversionPing pingWithConversionId:@"your id here"
-//                                        label:@"your label here"
-//                                        value:@"your app's price here"
-//                                 isRepeatable:YES/NO];
-// For example, to track downloads of your app, add the code to your application
-// delegate's application:didFinishLaunchingWithOptions: method.
+/// This class provides a way to make easy asynchronous requests to Google for
+/// conversion or remarketing pings.
 @interface GoogleConversionPing : NSObject
 
-// Reports a conversion to Google.
+/// Supported conversion ping types.
+typedef enum {
+  kGoogleConversion,
+  kDoubleClickConversion
+} ConversionType;
+
+/// Reports a conversion to Google.  Use the code as follows:
+///   \code
+///   [GoogleConversionPing pingWithConversionId:@"your id here"
+///                                        label:@"your label here"
+///                                        value:@"your app's price here"
+///                                 isRepeatable:YES/NO];
+///   \endcode
+/// For example, to track downloads of your app, add the code to your
+/// application delegate's application:didFinishLaunchingWithOptions: method.
 + (void)pingWithConversionId:(NSString *)conversionId
                        label:(NSString *)label
                        value:(NSString *)value
                 isRepeatable:(BOOL)isRepeatable;
 
-// Returns the Google Conversion SDK version.
+/// Reports a conversion to the ad network according to the type.  Use the code
+/// as follows:
+///   \code
+///   [GoogleConversionPing
+///        pingWithConversionId:@"your id here"
+///                        type:kGoogleConversion/kDoubleClickConversion
+///                       label:@"your label here"
+///                       value:@"your app's price here"
+///                isRepeatable:YES/NO];
+///   \endcode
+/// For example, to track downloads of your app, add the code to your
+/// application delegate's application:didFinishLaunchingWithOptions: method.
+/// Use this method only for the DFP (Doubleclick for Publishers) app conversion
+/// tracking. To track Adwords and Admob conversions, please use
+/// -pingWithConversionId:label:value:isRepeatable: which does not require the
+/// conversion type.
++ (void)pingWithConversionId:(NSString *)conversionId
+                        type:(ConversionType)type
+                       label:(NSString *)label
+                       value:(NSString *)value
+                isRepeatable:(BOOL)isRepeatable;
+
+/// Report a remarketing ping to Google.
++ (void)pingRemarketingWithConversionId:(NSString *)conversionId
+                                  label:(NSString *)label
+                             screenName:(NSString *)screenName
+                       customParameters:(NSDictionary *)customParameters;
+
+/// Register a click referrer from the Google ad click url.
++ (BOOL)registerReferrer:(NSURL *)clickUrl;
+
+/// Returns the Google Conversion SDK version.
 + (NSString *)sdkVersion;
 
 #pragma mark - Deprecated
 
-// UDID has been deprecated and this SDK only uses the IDFA as of version 1.2.0.
-// Setting the |idfaOnly| parameter is a no-op.
+/// UDID has been deprecated and this SDK only uses the IDFA as of version
+/// 1.2.0. Setting the |idfaOnly| parameter is a no-op.
 + (void)pingWithConversionId:(NSString *)conversionId
                        label:(NSString *)label
                        value:(NSString *)value
                 isRepeatable:(BOOL)isRepeatable
-                    idfaOnly:(BOOL)idfaOnly;
+                    idfaOnly:(BOOL)idfaOnly DEPRECATED_ATTRIBUTE;
 
 @end
