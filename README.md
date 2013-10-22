@@ -1,4 +1,4 @@
-GoogleConversionTracking
+Google Conversion Tracking
 ========================
 
-Storing Google Conversion Tracking Source Code for Cocoa Pods
+This repo is purely used to cache versions of Google Conversion Tracking for use within Cocoapods. As long as Google does not add support of versioning.
