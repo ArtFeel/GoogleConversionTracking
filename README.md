@@ -1,7 +1,7 @@
 Google Conversion Tracking SDK for iOS
 ========================
 
-This repo is purely used to cache versions of Google Conversion Tracking for use within Cocoapods. As long as Google does not add support of versioning.
+This repo is purely used to cache versions of Google Conversion Tracking for use within CocoaPods. As long as Google does not add support of versioning.
 
 Requirements:
 - An AdWords account.
